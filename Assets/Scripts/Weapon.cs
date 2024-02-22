@@ -50,6 +50,7 @@ public class Weapon : MonoBehaviour
             Shoot();
         }
 
+        //shotgun
         if(isMultiBullet && Input.GetKeyDown(KeyCode.Mouse0) && ammoLeft != 0)
         {
             for (int i = 0; i < PelletCount; i++)
@@ -69,6 +70,8 @@ public class Weapon : MonoBehaviour
         {
             timeToReload -= Time.deltaTime;
         }
+
+        //clip reload
         if (timeToReload <= 0 && hasClips)
         {
             ammoLeft = maxAmmo;
@@ -76,6 +79,8 @@ public class Weapon : MonoBehaviour
             isReloading = false;
             clipsLeft = clipsLeft - maxAmmo;
         }
+
+        //one by one reload
         if (timeToReload <= 0 && !hasClips)
         {
             if(ammoLeft != maxAmmo)

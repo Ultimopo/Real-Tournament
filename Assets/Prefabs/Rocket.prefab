@@ -154,7 +154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02548d5621d1b4691b40b63cc29e65d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
   speed: 20
+  explosionPrefab: {fileID: 4507870049406180591, guid: 351c26451498d8f4eb5d156fb1035e94,
+    type: 3}
+  bounceCount: 0
+  HasGravity: 1
+  velocityOn: 0
 --- !u!54 &-2695236301322819235
 Rigidbody:
   m_ObjectHideFlags: 0
