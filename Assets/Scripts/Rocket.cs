@@ -5,7 +5,10 @@ public class Rocket : MonoBehaviour
 
 	public int damage = 10;
 	public float speed = 20;
+
 	public GameObject explosionPrefab;
+
+
 	public int bounceCount;
 	public bool HasGravity;
 	public bool velocityOn;

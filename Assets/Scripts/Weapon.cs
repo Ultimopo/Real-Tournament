@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 public class Weapon : MonoBehaviour
 {
     public GameObject bulletPrefab;
+    public GameObject shellPrefab;
+
     public int ammoLeft;
     public int maxAmmo;
 
@@ -23,9 +26,18 @@ public class Weapon : MonoBehaviour
     public bool isMultiBullet;
     public int PelletCount = 12;
 
+    public float spreadAngle = 5;
+
     public TextMeshProUGUI ammoLeftText;
     public TextMeshProUGUI MaxAmmoText;
     public TextMeshProUGUI clipsAmountText;
+
+
+
+    public UnityEvent onRightClick;
+    public UnityEvent onShoot;
+
+
 
 
     void Start()
@@ -61,12 +73,17 @@ public class Weapon : MonoBehaviour
             ammoLeft--;
         }
 
+        if(Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            onRightClick.Invoke();
+        }
+
         if (Input.GetKeyDown(KeyCode.R) && isReloading == false)
         {
             Reload();
         }
 
-        if (isReloading == true)
+        if (isReloading && clipsLeft != 0)
         {
             timeToReload -= Time.deltaTime;
         }
@@ -74,10 +91,15 @@ public class Weapon : MonoBehaviour
         //clip reload
         if (timeToReload <= 0 && hasClips)
         {
-            ammoLeft = maxAmmo;
+            //ammoLeft = maxAmmo;
             timeToReload = reloadTime;
             isReloading = false;
-            clipsLeft = clipsLeft - maxAmmo;
+            //clipsLeft--;
+            var ammoToReload = Mathf.Min(maxAmmo - ammoLeft, clipsLeft);
+            clipsLeft -= ammoToReload;
+            ammoLeft += ammoToReload;
+            
+
         }
 
         //one by one reload
@@ -103,9 +125,14 @@ public class Weapon : MonoBehaviour
         clipsAmountText.text = clipsLeft.ToString();
     }
 
-    void Shoot()
+    public void Shoot()
     {
-        Instantiate(bulletPrefab, transform.position, transform.rotation);
+        
+
+        var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        var offsetX = Random.Range(-spreadAngle, spreadAngle);
+        var offsetY = Random.Range(-spreadAngle, spreadAngle);
+        bullet.transform.eulerAngles += new Vector3(offsetX, offsetY, 0);
         if (!isMultiBullet)
         {
             ammoLeft--;
@@ -118,6 +145,7 @@ public class Weapon : MonoBehaviour
         MaxAmmoText.text = maxAmmo.ToString();
         isReloading = false;
         timeToReload = reloadTime;
+        onShoot.Invoke();
 
     }
 

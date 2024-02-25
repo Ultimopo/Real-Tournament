@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1514ef9bcc33aec4287fd6bc8df3f25e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - weapon: {instanceID: 0}
+  - grenade: {fileID: 8112034479082718710, guid: a7a3169bab4d5bb4ba0e3e9f1b2e1821,
+      type: 3}
+  - originalBullet: {instanceID: 0}
+  - explosionPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
