@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
     public float shootInterval = 0.5f;
 
 
-    bool isReloading = false;
+    public bool isReloading = false;
     public bool isAutomatic;
 
     public bool hasClips;
@@ -37,12 +37,17 @@ public class Weapon : MonoBehaviour
     public UnityEvent onRightClick;
     public UnityEvent onShoot;
 
+    AudioSource source;
 
-
+    
+    public AudioClip reload;
+    public AudioClip shotgunfinish;
 
     void Start()
     {
         timeToReload = reloadTime;
+        source = GetComponent<AudioSource>();
+
 
         ammoLeftText.text = ammoLeft.ToString();
         MaxAmmoText.text = maxAmmo.ToString();
@@ -50,28 +55,6 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        //semiauto
-        if (Input.GetKeyDown(KeyCode.Mouse0) && ammoLeft != 0 && !isAutomatic)
-        {
-            Shoot();
-        }
-
-        //auto
-        if (isAutomatic && Input.GetKey(KeyCode.Mouse0) && ammoLeft != 0)
-        {
-            Shoot();
-        }
-
-        //shotgun
-        if(isMultiBullet && Input.GetKeyDown(KeyCode.Mouse0) && ammoLeft != 0)
-        {
-            for (int i = 0; i < PelletCount; i++)
-            {
-
-                Shoot();
-            }
-            ammoLeft--;
-        }
 
         if(Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -109,10 +92,12 @@ public class Weapon : MonoBehaviour
             {
                 ammoLeft++;
                 clipsLeft--;
+                source.PlayOneShot(reload);
             }
             else
             {
                 isReloading = false;
+                source.PlayOneShot(shotgunfinish);
             }
             timeToReload = reloadTime;
             
@@ -149,7 +134,7 @@ public class Weapon : MonoBehaviour
 
     }
 
-    void Reload()
+    public void Reload()
     {
         isReloading = true;
     }
