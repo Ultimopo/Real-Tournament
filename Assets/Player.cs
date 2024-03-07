@@ -123,7 +123,15 @@ public class Player : MonoBehaviour
 
         }
     }
-    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == GameObject.FindWithTag("Ammo"))
+        {
+            weapon.clipsLeft = weapon.clipsLeft + 3;
+            Destroy(other.gameObject);
+        }
+    }
+
     public void Respawn()
     {
         health.health = health.maxHealth;

@@ -31,14 +31,15 @@ public class Health : MonoBehaviour
 
     public void Damage(int damage)
     {
-        onDamage.Invoke();
         health -= damage;
+        onDamage.Invoke();
         if (damageEffect != null) Instantiate(damageEffect, transform.position, Quaternion.identity);
         if(health <= 0)
         {
             Die();
 
         }
+
     }
 
     public void Die()

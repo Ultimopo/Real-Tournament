@@ -9,7 +9,9 @@ public class enemy : MonoBehaviour
 
     Health health;
     NavMeshAgent agent;
-
+    int RNGAmmo;
+    public GameObject ammodrop;
+    bool hasDied = false;
 
     void Start()
     {
@@ -18,10 +20,22 @@ public class enemy : MonoBehaviour
         if (!target) target = GameObject.FindWithTag("Player").transform;
     }
 
+
     void Update()
     {
+        RNGAmmo = Random.Range(1, 4);
+        print(RNGAmmo);
         agent.destination = target.position;
     }
 
+    public void SpawnAmmo()
+    {
+
+            if (!hasDied || RNGAmmo == 3)
+            {
+                Instantiate(ammodrop, transform.position, Quaternion.identity);
+                hasDied = true;
+            }
+    }
 
 }
